@@ -18,7 +18,7 @@ List of supported distros:
 - Arch Linux
 
 # Installation
-To install nfetch just copy and run this command:
+To install or update nfetch just copy and run this command:
 ```
 wget -qO- https://raw.githubusercontent.com/mrvladus/nfetch/master/install.sh | sh
 ```
