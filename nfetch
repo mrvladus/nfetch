@@ -1,0 +1,89 @@
+#!/usr/bin/bash
+
+# Colors
+RED="\e[1;31m"
+BLU="\e[1;34m"
+CYA="\e[1;36m"
+GRE="\e[1;32m"
+YEL="\e[1;33m"
+MAG="\e[1;35m"
+END="\e[0m"
+
+# Packages
+PKGS="Packages: "
+[ $(command -v dpkg) ] && PKGS+="$(dpkg --get-selections | wc -l) (dpkg)"
+[ $(command -v rpm) ] && PKGS+="$(rpm -qa | wc -l) (rpm)"
+[ $(command -v pacman) ] && PKGS+="$(pacman -Q | wc -l) (pacman)"
+[ $(command -v flatpak) ] && PKGS+=" $(flatpak list -app | wc -l) (flatpak)"
+[ $(command -v snap) ] && PKGS+=" $(snap list | wc -l) (snap)"
+
+# Kernel
+KERNEL="Kernel: $(uname -s) $(uname -r)"
+
+# Distribution name
+OS_NAME="OS: $(grep -Po 'PRETTY_NAME="\K[^"]*' /etc/os-release)"
+# OS_NAME="arch"
+
+# CPU
+CPU_NAME="CPU: $(grep 'model name' /proc/cpuinfo | head -1 | cut -f3- -d" ")"
+
+# GPU
+GPU_NAME="GPU: $(lspci | grep VGA | head -1 | grep -Po '\[\K[^\]]*')"
+
+# RAM
+RAM_TOTAL=$(free -m | grep Mem | tr -s ' ' | cut -d' ' -f 2)
+RAM_USED=$(free -m | grep Mem | tr -s ' ' | cut -d' ' -f 3)
+RAM="RAM: $RAM_USED / $RAM_TOTAL MB ($(($RAM_USED * 100 / $RAM_TOTAL))%)"
+
+# Information summary
+INFO="
+$CYA$OS_NAME$END
+$GRE$PKGS$END
+$YEL$KERNEL$END
+$RED$CPU_NAME$END
+$MAG$GPU_NAME$END
+$BLU$RAM$END
+"
+
+# Logo's
+shopt -s nocasematch # Ignore case
+if [[ $OS_NAME =~ "arch" ]]; then
+LOGO="
+$CYA      /\      $END
+$CYA     /  \     $END
+$CYA    /\   \    $END
+$CYA   /  ,,  \   $END
+$CYA  /  |  | -\  $END
+$CYA /_-'    '-_\ $END"
+
+elif [[ $OS_NAME =~ "fedora" ]]; then
+LOGO="
+$BLU         ___  $END
+$BLU       /  __| $END
+$BLU    _ |  |__  $END
+$BLU  /  _|  |__| $END
+$BLU |  |_|  |    $END
+$BLU  \_____/     $END"
+
+elif [[ $OS_NAME =~ "ubuntu" ]]; then
+LOGO="
+$YEL    ,--(0).   $END
+$YEL   / ,---. \  $END
+$YEL (0) |   |  | $END
+$YEL   \ '---' /  $END
+$YEL    '---(0)   $END
+$YEL              $END"
+
+elif [[ $OS_NAME =~ "debian" ]]; then
+LOGO="
+$RED      ____     $END
+$RED    /  __ \    $END
+$RED   |  / *' |   $END
+$RED   |  \___-'   $END
+$RED   '_          $END
+$RED     '--_      $END"
+fi
+
+# Print logo and info
+clear
+paste <(echo -e "$LOGO") <(echo -e "$INFO")
