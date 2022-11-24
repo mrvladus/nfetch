@@ -1,5 +1,5 @@
 # nfetch
-This is a tiny colorful fetch utility, that uses **bash** to show the most important system information.
+This is a tiny, fast and colorful fetch utility, that uses **bash** to show the most important system information.
 ![nfetch](https://user-images.githubusercontent.com/64690334/203750002-0d4e53de-68ef-416c-8c7d-3515af51b354.png)
 
 Available info:
