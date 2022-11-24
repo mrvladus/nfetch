@@ -21,8 +21,7 @@ PKGS="Packages: "
 KERNEL="Kernel: $(uname -s) $(uname -r)"
 
 # Distribution name
-OS_NAME="OS: $(grep -Po 'PRETTY_NAME="\K[^"]*' /etc/os-release)"
-# OS_NAME="arch"
+OS_NAME="OS: $(( lsb_release -ds || cat /etc/*release || uname -om ) 2>/dev/null | head -n1)"
 
 # CPU
 CPU_NAME="CPU: $(grep 'model name' /proc/cpuinfo | head -1 | cut -f3- -d" ")"
