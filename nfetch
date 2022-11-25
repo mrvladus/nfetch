@@ -14,7 +14,7 @@ PKGS="Packages: "
 [ $(command -v dpkg) ] && PKGS+="$(dpkg --get-selections | wc -l) (dpkg)"
 [ $(command -v rpm) ] && PKGS+="$(rpm -qa | wc -l) (rpm)"
 [ $(command -v pacman) ] && PKGS+="$(pacman -Q | wc -l) (pacman)"
-[ $(command -v flatpak) ] && PKGS+=" $(flatpak list --app | wc -l) (flatpak)"
+[ $(command -v flatpak) ] && PKGS+=" $(flatpak list | wc -l) (flatpak)"
 [ $(command -v snap) ] && PKGS+=" $(snap list | wc -l) (snap)"
 
 # Kernel
