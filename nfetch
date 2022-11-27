@@ -30,8 +30,8 @@ CPU_NAME="CPU: $(grep 'model name' /proc/cpuinfo | head -1 | cut -f3- -d" ")"
 GPU_NAME="GPU: $(lspci | grep VGA | head -1 | grep -Po '\[\K[^\]]*')"
 
 # RAM
-RAM_TOTAL=$(free -m | grep Mem | tr -s ' ' | cut -d' ' -f 2)
-RAM_USED=$(free -m | grep Mem | tr -s ' ' | cut -d' ' -f 3)
+RAM_TOTAL=$(free -m | head -n 2 | tail -n 1 | tr -s ' ' | cut -d' ' -f 2)
+RAM_USED=$(free -m | head -n 2 | tail -n 1 | tr -s ' ' | cut -d' ' -f 3)
 RAM="RAM: $RAM_USED / $RAM_TOTAL MB ($(($RAM_USED * 100 / $RAM_TOTAL))%)"
 
 # Information summary
