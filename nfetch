@@ -46,7 +46,7 @@ $BLU$RAM$END
 
 # Logo's
 shopt -s nocasematch # Ignore case
-if [[ $OS_NAME =~ "arch" ]]; then
+if [[ $OS_NAME =~ "Arch" ]]; then
 LOGO="
 $CYA      /\      $END
 $CYA     /  \     $END
@@ -55,7 +55,7 @@ $CYA   /  ,,  \   $END
 $CYA  /  |  | -\  $END
 $CYA /_-'    '-_\ $END"
 
-elif [[ $OS_NAME =~ "fedora" ]]; then
+elif [[ $OS_NAME =~ "Fedora" ]]; then
 LOGO="
 $BLU         ___  $END
 $BLU       /  __| $END
@@ -64,7 +64,7 @@ $BLU  /  _|  |__| $END
 $BLU |  |_|  |    $END
 $BLU  \_____/     $END"
 
-elif [[ $OS_NAME =~ "ubuntu" ]]; then
+elif [[ $OS_NAME =~ "Ubuntu" ]]; then
 LOGO="
 $YEL    ,--(0).   $END
 $YEL   / ,---. \  $END
@@ -73,16 +73,24 @@ $YEL   \ '---' /  $END
 $YEL    '---(0)   $END
 $YEL              $END"
 
-elif [[ $OS_NAME =~ "debian" ]]; then
+elif [[ $OS_NAME =~ "Debian" ]]; then
 LOGO="
-$RED      ____     $END
-$RED    /  __ \    $END
-$RED   |  / *' |   $END
-$RED   |  \___-'   $END
-$RED   '_          $END
-$RED     '--_      $END"
-fi
+$RED      ____    $END
+$RED    /  __ \   $END
+$RED   |  / *' |  $END
+$RED   |  \___-'  $END
+$RED   '_         $END
+$RED     '--_     $END"
 
+elif [[ $OS_NAME =~ "pop!_OS" ]]; then
+LOGO="
+$CYA  ____     _  $END
+$CYA |     \  | | $END
+$CYA | (_)  | | | $END
+$CYA |   __/  | | $END
+$CYA |  |     '_' $END
+$CYA '__'     (_) $END"
+fi
 # Print logo and info
 clear
 paste <(echo -e "$LOGO") <(echo -e "$INFO")
