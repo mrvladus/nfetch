@@ -10,38 +10,38 @@ MAG="\e[1;35m"
 END="\e[0m"
 
 # Packages
-PKGS="Packages: "
+PKGS=$GRE"Packages: "$END
 [ $(command -v dpkg) ] && PKGS+="$(dpkg --get-selections | wc -l) (dpkg)"
 [ $(command -v rpm) ] && PKGS+="$(rpm -qa | wc -l) (rpm)"
 [ $(command -v pacman) ] && PKGS+="$(pacman -Q | wc -l) (pacman)"
 [ $(command -v flatpak) ] && PKGS+=" $(flatpak list | wc -l) (flatpak)"
 [ $(command -v snap) ] && PKGS+=" $(snap list | wc -l) (snap)"
 
-# Kernel
-KERNEL="Kernel: $(uname -s) $(uname -r)"
-
 # Distribution name
-OS_NAME="OS: $(( lsb_release -ds || cat /etc/*release || uname -om ) 2>/dev/null | head -n1)"
+OS=$CYA"OS: "$END"$(cat /etc/os-release | grep PRETTY_NAME | cut -d\" -f2)"
+
+# Kernel
+KERNEL=$YEL"Kernel: "$END"$(uname -s) $(uname -r)"
 
 # CPU
-CPU_NAME="CPU: $(grep 'model name' /proc/cpuinfo | head -1 | cut -f3- -d" ")"
+CPU=$RED"CPU: "$END"$(grep 'model name' /proc/cpuinfo | head -1 | cut -f3- -d" ")"
 
 # GPU
-GPU_NAME="GPU: $(lspci | grep VGA | head -1 | grep -Po '\[\K[^\]]*')"
+GPU=$MAG"GPU: "$END"$(lspci | grep VGA | head -1 | grep -Po '\[\K[^\]]*')"
 
 # RAM
 RAM_TOTAL=$(free -m | head -n 2 | tail -n 1 | tr -s ' ' | cut -d' ' -f 2)
 RAM_USED=$(free -m | head -n 2 | tail -n 1 | tr -s ' ' | cut -d' ' -f 3)
-RAM="RAM: $RAM_USED / $RAM_TOTAL MB ($(($RAM_USED * 100 / $RAM_TOTAL))%)"
+RAM=$BLU"RAM: "$END"$RAM_USED / $RAM_TOTAL MB ($(($RAM_USED * 100 / $RAM_TOTAL))%)"
 
 # Information summary
 INFO="
-$CYA$OS_NAME$END
-$GRE$PKGS$END
-$YEL$KERNEL$END
-$RED$CPU_NAME$END
-$MAG$GPU_NAME$END
-$BLU$RAM$END
+$OS
+$PKGS
+$KERNEL
+$CPU
+$GPU
+$RAM
 "
 
 # Logo's
